@@ -1,0 +1,6 @@
+newsapi = NewsApiClient(api_key='c329b95fd748460e9d812c20f549bb42')
+
+@app.route('/getnews')
+def get_news():
+    top_headlines = newsapi.get_top_headlines(country='us', language='en', category='sports')
+    return jsonify(top_headlines)

@@ -1,0 +1,67 @@
+/* General Container Styling */
+.profile-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f0f2f5; /* Light background color */
+}
+
+/* Profile Container Styling */
+.profile {
+    width: 50%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.profile-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Styling */
+.profile-header {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Profile Information Styling */
+.profile-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.profile-info-item {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0.5rem 0;
+}
+
+/* Logout Button Styling */
+.profile-logout-button {
+    background-color: #ff4b5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-logout-button:hover {
+    background-color: #ff1c38;
+}
