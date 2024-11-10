@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import './styles/Profile.css';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
 
-axios.defaults.withCredentials = true;
 
 const ProfileView = () => {
     const navigate = useNavigate();
@@ -13,43 +13,73 @@ const ProfileView = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/User/');
+                const response = await axiosInstance.get('User/');
                 setUserData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error.response?.data?.message || error.message);
             }
+
         };
 
         fetchData();
     }, []);
 
-    const handleLogout = async (event) => {
-        event.preventDefault();
-        const csrftoken = Cookies.get('csrftoken');
-        console.log(csrftoken);
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/Logout/', {}, {
-                headers: {
-                    'X-CSRFToken': 'TuEbdYN14qcOlPRMNFKv6YZZCT1ad0ep'
-                }
-            });
-            console.log('Response:', response.data);
-            navigate('/');
-        } catch (error) {
-            console.error('Error:', error.response?.data?.message || error.message);
-        }
-    }
-
     return (
-        <div className="profile-container">
-            <h1 className="profile-header">Welcome, {userData?.username}</h1>
-            <div className="profile-info">
-                <h3 className="profile-info-item">Username: {userData?.username}</h3>
-                <h3 className="profile-info-item">Email: {userData?.email}</h3>
-                <h3 className="profile-info-item">Bankroll: {userData?.bankroll}</h3>
-            </div>
-            <button className="profile-logout-button" onClick={handleLogout}>Logout</button>
-        </div>
+        <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
+		      <MDBContainer className="py-5 h-100">
+		        <MDBRow className="justify-content-center align-items-center h-100">
+		          <MDBCol lg="6" className="mb-4 mb-lg-0">
+		            <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
+		              <MDBRow className="g-0">
+		                <MDBCol md="4" className="gradient-custom text-center text-white"
+		                  style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
+		                  <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+		                    alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
+		                  <MDBTypography tag="h5">{userData?.username}</MDBTypography>
+		                  <MDBCardText>BADGE</MDBCardText>
+		                  <MDBIcon far icon="edit mb-5" />
+		                </MDBCol>
+		                <MDBCol md="8">
+		                  <MDBCardBody className="p-4">
+		                    <MDBTypography tag="h6">Information</MDBTypography>
+		                    <hr className="mt-0 mb-4" />
+		                    <MDBRow className="pt-1">
+		                      <MDBCol size="6" className="mb-3">
+		                        <MDBTypography tag="h6">Email</MDBTypography>
+		                        <MDBCardText className="text-muted">info@example.com</MDBCardText>
+		                      </MDBCol>
+		                      <MDBCol size="6" className="mb-3">
+		                        <MDBTypography tag="h6">Phone</MDBTypography>
+		                        <MDBCardText className="text-muted">123 456 789</MDBCardText>
+		                      </MDBCol>
+		                    </MDBRow>
+
+		                    <MDBTypography tag="h6">Information</MDBTypography>
+		                    <hr className="mt-0 mb-4" />
+		                    <MDBRow className="pt-1">
+		                      <MDBCol size="6" className="mb-3">
+		                        <MDBTypography tag="h6">Bankroll</MDBTypography>
+		                        <MDBCardText className="text-muted">${userData?.bankroll}</MDBCardText>
+		                      </MDBCol>
+		                      <MDBCol size="6" className="mb-3">
+		                        <MDBTypography tag="h6">User Since</MDBTypography>
+		                        <MDBCardText className="text-muted">${userData?.date_joined}</MDBCardText>
+		                      </MDBCol>
+		                    </MDBRow>
+
+		                    <div className="d-flex justify-content-start">
+							  <a href="#!"><MDBIcon fab icon="facebook me-3" size="lg"/></a>
+		                      <a href="#!"><MDBIcon fab icon="twitter me-3" size="lg" /></a>
+		                      <a href="#!"><MDBIcon fab icon="instagram me-3" size="lg" /></a>
+		                    </div>
+		                  </MDBCardBody>
+		                </MDBCol>
+		              </MDBRow>
+		            </MDBCard>
+		          </MDBCol>
+		        </MDBRow>
+		      </MDBContainer>
+		    </section>
     );
 }
 

@@ -4,10 +4,11 @@ import './styles/Register.css';
 import axios from 'axios';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-
+import { useNavigate } from 'react-router-dom';
 axios.defaults.withCredentials = true;
 
 const RegisterScreen = () => {
+	const navigate = useNavigate();
     const [values, setValues] = useState({
         email: '',
         username: '',
@@ -43,9 +44,16 @@ const RegisterScreen = () => {
             "bankroll": values.bankroll
         };
 
+		const loginData = {
+			"email": values.email,
+			"password": values.password,
+			"long_session" : "false"
+		}
+
         try {
             const response = await axios.post('http://127.0.0.1:8000/Register/', registrationData);
             console.log('Response:', response.data);
+			navigate('/login');
         } catch (error) {
             console.error('Error:', error.response.data.message);
         }
@@ -142,20 +150,24 @@ const RegisterScreen = () => {
                 )}
                 {currentStep === 2 && (
                     <div className="step step-2 active">
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <div className="password-container">
-                                <input type="password" id="password" name="password" onChange={handleInput} value={values.password} ></input>
-                                <i className="eye-icon bi bi-eye-slash" id="togglePassword" onClick={togglePassword}></i>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="confirm-password">Confirm password</label>
-                            <div className="password-container">
-                                <input type="password" id="confirm-password" name="confirm_password" onChange={handleInput} value={values.confirm_password}></input>
-                                <i className="eye-icon bi bi-eye-slash" id="toggleConfirmPassword" onClick={toggleConfirmPassword}></i>
-                            </div>
-                        </div>
+						<FloatingLabel contrtolId="floatingInput" label="Password" classname="mb-3">
+							<Form.Control
+								type="password"
+								placeholder="password"
+								name="password"
+								onChange={handleInput}
+								value={values.password}
+							/>
+						</FloatingLabel>
+						<FloatingLabel controlId="floatingInput" label="Confirm Password" classname="mb-3">
+							<Form.Control
+								type="password"
+								placeholder="confirm-password"
+								name="confirm_password"
+								onChange={handleInput}
+								value={values.confirm_password}
+							/>
+						</FloatingLabel>
                         {errors.password && <span className="text-danger">{errors.password}</span>}
                         <button type="button" className="next-btn" onClick={handleNext}>Next</button>
 
@@ -179,6 +191,7 @@ const RegisterScreen = () => {
                         <button type="button" className="next-btn" onClick={sendEmail}>Send Code</button>
                     </div>
                 )}
+				
                 {currentStep === 4 && (
                     <div className="step step-4 active">
                         <div className="form-group">

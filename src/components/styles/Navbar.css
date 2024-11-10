@@ -7,6 +7,9 @@
 }
 
 .navbar-list {
+	display: flex;
+	align-items: center;
+	justify-content: right;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -34,9 +37,27 @@
 }
 
 .material-symbols-outlined {
+	color:black !important;   
   font-variation-settings:
   'FILL' 0,
   'wght' 400,
   'GRAD' 0,
   'opsz' 24;
 }
+
+#dropdown-basic-button{
+	margin: none;
+	background-color:white !important;
+	color: white !important;
+	box-shadow: none !important;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+}
+
+a:visited{
+	color: black;
+}
+
+

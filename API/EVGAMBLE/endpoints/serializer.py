@@ -11,3 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'username', 'promotions', 'bankroll', 'category']
         read_only_fields = ['email']
+
+class PokerSessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PokerSession
+        fields = '__all__'

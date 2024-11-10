@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'EVGAMBLE',
         'USER': 'root', 
-        'PASSWORD': 'temp1234',
+        'PASSWORD': 'Brady240',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -163,5 +163,7 @@ CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = False
+
 
 AUTH_USER_MODEL = 'endpoints.User'

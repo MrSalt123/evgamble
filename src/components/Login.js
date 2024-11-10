@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance, { setCSRFToken } from './axiosInstance';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Login.css';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -37,9 +37,11 @@ const LoginScreen = () => {
             long_session: values.remember
         };
 
-        axios.post('http://127.0.0.1:8000/Login/', loginData, { withCredentials: true })
+        axiosInstance.post('Login/', loginData)
             .then(response => {
-                console.log(response.data);
+				const csrf_token = response.data.csrftoken;
+				localStorage.setItem('csrftoken', csrf_token);
+				localStorage.setItem('loggedIn', 'true');
                 navigate('/profile');
             })
             .catch(error => {

@@ -34,7 +34,9 @@ const News = () => {
         <div className='article-box'>
           {topHeadlines.map((article, index) => (
             <div key={index} className="article">
-              <a href={article.url} target="_blank"><img src={article.urlToImage}></img></a>
+              <a href={article.url} target="_blank">
+				<img src={article.urlToImage} alt={article.title}/>
+			  </a>
               <div className='article-description'>{article.title}</div>
             </div>
           ))}

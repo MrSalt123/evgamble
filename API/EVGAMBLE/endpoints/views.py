@@ -10,6 +10,7 @@ from newsapi import NewsApiClient
 from django.http import JsonResponse
 from endpoints.serializer import *
 from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.middleware.csrf import get_token
 
 newsapi = NewsApiClient(api_key='c329b95fd748460e9d812c20f549bb42')
 
@@ -47,6 +48,25 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
+
+class PokerSessionListCreate(generics.ListCreateAPIView):
+    serializer_class = PokerSessionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return PokerSession.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class PokerSessionDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PokerSessionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return PokerSession.objects.filter(user=self.request.user)
+
+
 @api_view(['GET'])
 def verify_email(request, email): 
     if email:
@@ -68,7 +88,7 @@ def verify_email(request, email):
 
 @api_view(['GET'])
 def get_news(request):
-    top_headlines = newsapi.get_top_headlines(country='us', language='en', category='sports')
+    top_headlines = newsapi.get_top_headlines(sources='espn')
     return JsonResponse(top_headlines)
 
 @api_view(['POST'])
@@ -110,7 +130,8 @@ def login_user(request):
     login(request, user)
     if long_session:
         request.session.set_expiry(30*24*60*60)
-    return Response({'message': 'Login successful'}, status=200)
+    csrftoken = get_token(request);
+    return Response({'message': 'Login successful', 'csrftoken': csrftoken}, status=200)
 
 @api_view(['POST'])
 def logout_user(request):

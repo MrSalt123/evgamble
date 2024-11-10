@@ -1,0 +1,52 @@
+.session-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction:column;
+}
+
+.session {
+	border-style: solid;
+	border-radius: 5px;
+	margin-bottom: 2vh;
+	width: 90%;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction:column;
+}
+
+#add-session {
+	background-color: #ffffff !important;   
+	box-shadow: none;
+	color: black;              
+	border: none;       
+	padding: 5px 5px;        
+	cursor: pointer;    
+	border-radius: 5px; 
+}
+
+.material-icons {
+	vertical-align: middle;    
+	font-size: 24px;        
+}
+
+
+.material-symbols-outlined {
+	font-variation-settings:
+	'FILL' 0,
+	'wght' 400,
+	'GRAD' 0,
+	'opsz' 24
+}
+
+.#add-session:focus,
+.#add-session:active {
+	  box-shadow: none; /* Remove focus shadow */
+	    outline: none; /* Remove focus outline */
+		  transform: none; /* Prevent enlargement */
+		    transition: none; /* Disable any transitions */
+		}

@@ -3,8 +3,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import Group, Permission
-
+from django.contrib.auth.models import Group, Permission, User
+from django.conf import settings
 # Create your models here.
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -73,3 +73,15 @@ class VerificationCode(models.Model):
     
     class Meta:
         db_table = 'RegistrationCodes'
+
+class PokerSession(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+    session_date = models.DateTimeField()
+    duration = models.DurationField()
+    buy_in = models.DecimalField(max_digits=10, decimal_places=2)
+    cash_out = models.DecimalField(max_digits=10, decimal_places=2)
+    notes = models.TextField(blank=True, null=True)
+    stakes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.session_date}'
