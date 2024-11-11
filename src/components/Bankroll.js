@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from './axiosInstance';
 import './styles/Bankroll.css';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon, MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBInputGroup} from 'mdb-react-ui-kit';
-
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const BankrollView = () => {
     const [userData, setUserData] = useState(null);
 	const [sessions, setSessions] = useState([]);
-	const [optLgModal, setOptLgModal] = useState(false);
+	const [modalShow, setModalShow] = useState(false);
 
 	const [formData, setFormData] = useState({
 		duration: '',
@@ -17,7 +20,7 @@ const BankrollView = () => {
 		notes: ''
 	});
 
-	const toggleOpen = () => setOptLgModal(!optLgModal);
+	const toggleOpen = () => setModalShow(true);
 
 	const getCurrentDateTime = () => {
 		const now = new Date();
@@ -25,7 +28,7 @@ const BankrollView = () => {
 	};
 
 	const handleSubmit = (e) => {
-		setOptLgModal(false);
+		setModalShow(false);
 		const csrftoken = localStorage.getItem('csrftoken');
 		const sessionData = {
 			session_date: getCurrentDateTime(), // gets current date
@@ -89,39 +92,79 @@ const BankrollView = () => {
 			<h1>${userData?.bankroll}</h1>
 		</div>
 		<div className='session-box'>
-			<MDBBtn id="add-session" onClick={toggleOpen}><span className="material-symbols-outlined">add_circle</span></MDBBtn>
-		      <MDBModal open={optLgModal} tabIndex='-1' onClose={() => setOptLgModal(false)}>
-		        <MDBModalDialog size='lg'>
-		          <MDBModalContent>
-		            <MDBModalHeader>
-		              <MDBModalTitle>Add Poker Session</MDBModalTitle>
-		              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
-		            </MDBModalHeader>
-		            <MDBModalBody>
-						<MDBInputGroup textBefore='Duration' className='mb-3'>
-		        <input className='form-control' type='text' value={formData.duration} name="duration" onChange={handleChange}/>
-		      </MDBInputGroup>
+			<Button variant="primary" onClick={() => setModalShow(true)} id="add-session">
+		        <span class="material-symbols-outlined">add_circle</span>
+		      </Button>
 
-		      <MDBInputGroup className='mb-3' textBefore='Buy in'>
-		        <input className='form-control' type='text' value={formData.buyin} name="buyin" onChange={handleChange}/>
-		      </MDBInputGroup>
+		      <Modal
+		        show={modalShow}
+		        onHide={() => setModalShow(false)}
+		        size="lg"
+		        aria-labelledby="contained-modal-title-vcenter"
+		        centered
+		      >
+		        <Modal.Header closeButton>
+		          <Modal.Title id="contained-modal-title-vcenter">
+		            Add Poker Session
+		          </Modal.Title>
+		        </Modal.Header>
+		        <Modal.Body>
 
-		      <MDBInputGroup className='mb-3' textBefore='Cash out'>
-		        <input className='form-control' type='text' value={formData.cashout} name="cashout" onChange={handleChange}/>
-		      </MDBInputGroup>
+					<InputGroup className="mb-3">
+						<InputGroup.Text id="basic-addon1">Duration</InputGroup.Text>
+						<Form.Control
+							name="duration"
+							value={formData.duration}
+							onChange={handleChange}
+							aria-label="Duration"
+							aria-describedby="basic-addon1"
+						/>
+					</InputGroup>
 
-		      <MDBInputGroup className='mb-3' textBefore='Stakes'>
-		        <input className='form-control' type='text' value={formData.stakes} name="stakes" onChange={handleChange}/>
-		      </MDBInputGroup>
+					<InputGroup className="mb-3">
+						<InputGroup.Text id="basic-addon2">Buy in</InputGroup.Text>
+						<Form.Control
+						name="buyin"
+						value={formData.buyin}
+						onChange={handleChange}
+						aria-label="Buy in"
+						aria-describedby="basic-addon2"
+						/>
+					</InputGroup>
 
-		      <MDBInputGroup className='mb-3' textBefore='Notes'>
-		        <textarea className='form-control' value={formData.notes} name="notes" onChange={handleChange}/>
-		      </MDBInputGroup>
-				<MDBBtn id="submit" onClick={handleSubmit}>Submit</MDBBtn>
-					</MDBModalBody>
-		          </MDBModalContent>
-		        </MDBModalDialog>
-		      </MDBModal>
+					<InputGroup className="mb-3">
+						<InputGroup.Text id="basic-addon1">Cash Out</InputGroup.Text>
+						<Form.Control
+						name="cashout"
+						value={formData.cashout}
+						onChange={handleChange}
+						aria-label="Cash out"
+						aria-describedby="basic-addon1"
+						/>
+					</InputGroup>
+					
+					<InputGroup className="mb-3">
+						<InputGroup.Text id="basic-addon1">Stakes</InputGroup.Text>
+						<Form.Control
+						name="stakes"
+						value={formData.stakes}
+						onChange={handleChange}
+						aria-label="Stakes"
+						aria-describedby="basic-addon1"
+						/>
+					</InputGroup>
+
+					<InputGroup>
+						<InputGroup.Text>Notes</InputGroup.Text>
+						<Form.Control name="notes" value={formData.notes} onChange={handleChange} as="textarea" aria-label="Notes" />
+					</InputGroup>
+					
+		        </Modal.Body>
+
+		        <Modal.Footer>
+		          <Button onClick={handleSubmit}>Submit</Button>
+		        </Modal.Footer>
+		      </Modal>
 
 			{sessions.slice().reverse().map((session, index) => (
 				<MDBContainer key={index} className="py-5 h-100">
@@ -156,13 +199,6 @@ const BankrollView = () => {
 				          </MDBCol>
 				        </MDBRow>
 				      </MDBContainer>
-				/* <div key={index} className="session">
-					<h2>Session: {session.id}</h2>
-					<h1>Buy in: {session.buy_in}</h1>
-					<h1>Cash out: {session.cash_out}</h1>
-					<h1>Date: {formatDate(session.session_date)}</h1>
-					<h1>Notes: {session.notes}</h1>
-				</div> */
 			))}
 		</div>
       </div>
