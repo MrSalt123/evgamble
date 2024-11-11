@@ -1,0 +1,50 @@
+name: evgamble
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - asgiref=3.8.1=pyhd8ed1ab_0
+  - bzip2=1.0.8=h5eee18b_6
+  - ca-certificates=2024.6.2=hbcca054_0
+  - django=5.0.6=pyhd8ed1ab_0
+  - ld_impl_linux-64=2.38=h1181459_1
+  - libffi=3.4.4=h6a678d5_1
+  - libgcc-ng=13.2.0=h77fa898_7
+  - libgomp=13.2.0=h77fa898_7
+  - libstdcxx-ng=13.2.0=hc0a3c3a_7
+  - libuuid=1.41.5=h5eee18b_0
+  - libzlib=1.2.13=h4ab18f5_6
+  - mysql-common=8.3.0=hf1915f5_4
+  - mysql-connector-c=6.1.11=h659d440_1008
+  - mysql-libs=8.3.0=hca2cd23_4
+  - mysqlclient=2.2.4=py311hb755f60_1
+  - ncurses=6.4=h6a678d5_0
+  - openssl=3.3.1=h4ab18f5_0
+  - pip=24.0=py311h06a4308_0
+  - python=3.11.9=h955ad1f_0
+  - python_abi=3.11=2_cp311
+  - readline=8.2=h5eee18b_0
+  - setuptools=69.5.1=py311h06a4308_0
+  - sqlite=3.45.3=h5eee18b_0
+  - sqlparse=0.4.4=py311h06a4308_0
+  - tk=8.6.14=h39e8969_0
+  - typing_extensions=4.12.2=pyha770c72_0
+  - tzdata=2024a=h04d1e81_0
+  - wheel=0.43.0=py311h06a4308_0
+  - xz=5.4.6=h5eee18b_1
+  - zlib=1.2.13=h4ab18f5_6
+  - zstd=1.5.6=ha6fb4c9_0
+  - pip:
+      - certifi==2024.6.2
+      - charset-normalizer==3.3.2
+      - django-cors-headers==4.3.1
+      - djangorestframework==3.15.1
+      - idna==3.7
+      - mysql==0.0.3
+      - newsapi-python==0.2.7
+      - pymysql==1.1.1
+      - requests==2.32.3
+      - urllib3==2.2.1
+prefix: /home/saltyyy/miniconda3/envs/evgamble
